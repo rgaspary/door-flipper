@@ -2,58 +2,64 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 // import { render } from 'react-dom';
 
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { IconButton, Colors } from 'react-native-paper';
+
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
       garageDoorState: 'CLOSED',
-      backgroundStyle: styles.garageClosed,
+      garageDoorIcon: 'garage',
+      buttonBackgroundStyle: styles.doorClosed,
     }
-    this.OpenGarage = this.OpenGarage.bind(this);
-    this.CloseGarage = this.CloseGarage.bind(this);
+
+    this.garageControl = this.garageControl.bind(this);
   }
 
-  OpenGarage = () => {
-    this.setState({
-      garageDoorState: 'OPEN',
-      backgroundStyle: styles.garageOpen,
-    });
-  }
-
-  CloseGarage = () => {
-    this.setState({
-      garageDoorState: 'CLOSED',
-      backgroundStyle: styles.garageClosed,
-    });
+  garageControl = () => {
+    const state = this.state.garageDoorState;
+    if (state === 'OPEN') {
+      this.setState({ 
+        garageDoorState: 'CLOSED',
+        garageDoorIcon: 'garage',
+        buttonBackgroundStyle: styles.doorClosed,
+      });
+    } else if (state === 'CLOSED') {
+      this.setState({
+        garageDoorState: 'OPEN',
+        garageDoorIcon: 'garage-open',
+        buttonBackgroundStyle: styles.doorOpen,
+      });
+    } else {
+      this.setState({ 
+        garageDoorState: 'CLOSED',
+        garageDoorIcon: 'garage',
+        buttonBackgroundStyle: styles.doorClosed,
+      });
+    }
   }
 
   render() {
     return (
-      <SafeAreaView style={this.state.backgroundStyle}>
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <Text style={styles.title}>
             Door Flipper (╯°□°）╯︵ &#128682;
           </Text>
         </View>
-        <View style={styles.container}>
-          <Text style={styles.status}>
-            THE GARAGE DOOR IS
-          </Text>
-          <Text style={styles.status}>{this.state.garageDoorState}!</Text>
+        <View style={styles.fixToText}>
+          <IconButton
+            icon={this.state.garageDoorIcon}
+            color={Colors.black500}
+            size={100}
+            onPress={this.garageControl}
+            style={this.state.buttonBackgroundStyle}
+          />
         </View>
         <View style={styles.container}>
-          <View style={styles.fixToText}>
-            <Button 
-              style={styles.button}
-              onPress={this.OpenGarage}
-              title="Open Garage"
-            />
-            <Button 
-              style={styles.button}
-              onPress={this.CloseGarage}
-              title="Close Garage"
-            />
-          </View>
+          <Text style={styles.status}>THE GARAGE DOOR IS</Text>
+          <Text style={styles.status}>{this.state.garageDoorState}!</Text>
         </View>
       </SafeAreaView>
     );
@@ -61,19 +67,18 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  garageOpen: {
-    backgroundColor: '#1fffa5',
+  safeArea: {
     flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
-  garageClosed: {
+  doorOpen: {
+    backgroundColor: '#1fffa5',
+  },
+  doorClosed: {
     backgroundColor: '#ff1f3d',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
   },
   container: {
     width: '100%',
