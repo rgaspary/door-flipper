@@ -1,8 +1,15 @@
+/** TODO:
+ *  - Create error manager
+ *  - Add Ajax component
+ *  - Add local storage to setup IoT devices
+ *  - Add settings component
+ *  - Seperate parts of App.js into smaller parts
+ */
+
+
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native';
-// import { render } from 'react-dom';
 
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IconButton, Colors } from 'react-native-paper';
 
 export default class App extends Component {
