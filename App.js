@@ -7,6 +7,7 @@ export default class App extends Component {
     super();
     this.state = {
       garageDoorState: 'CLOSED',
+      backgroundStyle: styles.garageClosed,
     }
     this.OpenGarage = this.OpenGarage.bind(this);
     this.CloseGarage = this.CloseGarage.bind(this);
@@ -15,18 +16,20 @@ export default class App extends Component {
   OpenGarage = () => {
     this.setState({
       garageDoorState: 'OPEN',
+      backgroundStyle: styles.garageOpen,
     });
   }
 
   CloseGarage = () => {
     this.setState({
       garageDoorState: 'CLOSED',
+      backgroundStyle: styles.garageClosed,
     });
   }
 
   render() {
     return (
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={this.state.backgroundStyle}>
         <View style={styles.container}>
           <Text style={styles.title}>
             Door Flipper (╯°□°）╯︵ &#128682;
@@ -34,8 +37,9 @@ export default class App extends Component {
         </View>
         <View style={styles.container}>
           <Text style={styles.status}>
-            THE DOOR IS {this.state.garageDoorState}!
+            THE GARAGE DOOR IS
           </Text>
+          <Text style={styles.status}>{this.state.garageDoorState}!</Text>
         </View>
         <View style={styles.container}>
           <View style={styles.fixToText}>
@@ -57,9 +61,16 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  garageOpen: {
+    backgroundColor: '#1fffa5',
     flex: 1,
-    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  garageClosed: {
+    backgroundColor: '#ff1f3d',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
